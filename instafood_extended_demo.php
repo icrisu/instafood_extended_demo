@@ -20,6 +20,7 @@ function isInstFoodInstalled(): bool {
 }
 
 // Handle manual print request via PrintNode
+// Manual Print can be triggered from admin view/edit order
 function on_manual_remote_print_request(int $orderId, string $printerId) {
     if (!com\sakuraplugins\appetit\services\PrintNodeService::getInstance()->canUsePrintNode()) {
         return;
