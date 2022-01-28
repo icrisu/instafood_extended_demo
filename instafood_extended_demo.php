@@ -24,7 +24,8 @@ function on_manual_remote_print_request(int $orderId, string $printerId) {
     if (!com\sakuraplugins\appetit\services\PrintNodeService::getInstance()->canUsePrintNode()) {
         return;
     }
-    InstafoodRemotePrint::handleRemotePrint($orderId, $printerId);
+    $instPrint = new InstafoodRemotePrint();
+    $instPrint->handleRemotePrint($orderId, $printerId);
 }
 
 // hooks
