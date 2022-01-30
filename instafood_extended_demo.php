@@ -49,11 +49,23 @@ function on_instafood_order_status_changed(int $orderId, string $newStatus) {
     // possible newStatus values ['NEW_ORDER', 'ACCEPTED', 'REJECTED', 'PREPARED', 'DELIVERED', 'CLOSED']
 }
 
+function on_instafood_price_format($price) {
+    // return null if don't want to alter the price format server side
+    // return NULL;
+    $frontend_enabled_decimal_dot = com\sakuraplugins\appetit\utils\OptionUtil::getInstance()->getOption("frontend_enabled_decimal_dot", '');
+    $separator = $frontend_enabled_decimal_dot === 'ON' ? '.' : ',';
+    if (isset($price) && is_numeric($price)) {
+        return number_format($price, 2, $separator , ".");
+    }
+    return number_format(0, 2, $separator , ".");
+}
+
 // hooks
 if (isInstFoodInstalled()) {
     add_action('instafood_manual_remote_print_request', 'on_instafood_manual_remote_print_request', 10, 2);
     add_action('instafood_new_order', 'on_instafood_new_order', 10, 1);
     add_action('instafood_order_status_changed', 'on_instafood_order_status_changed', 10, 2);
+    add_filter('instafood_price_format_filter', 'on_instafood_price_format', 11, 1);
 }
 
 
