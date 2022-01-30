@@ -29,9 +29,25 @@ function on_manual_remote_print_request(int $orderId, string $printerId) {
     $instPrint->handleRemotePrint($orderId, $printerId);
 }
 
+// handle new order from user in the background
+function on_instafood_new_order(int $orderId) {
+    // sample on how to retrive order data
+    // could be used to inform other API's Ex: Send SMS, send alerts to waiter
+    // can olso be used to automatically print invoice via PrintNode (see InstafoodRemotePrint example above)
+    
+    // $order = new com\sakuraplugins\appetit\rest_api\models\Order();
+    // $order->findOne($orderId);
+    // if (!$order->getProperty('ID')) {
+    //     return;
+    // }
+    // $_orderAll = $order->getAllProperties();
+    // $lineItemsData = $order->getLineItemsData();
+}
+
 // hooks
 if (isInstFoodInstalled()) {
     add_action('manual_remote_print_request', 'on_manual_remote_print_request', 10, 2);
+    add_action('instafood_new_order', 'on_instafood_new_order', 10, 1);
 }
 
 
