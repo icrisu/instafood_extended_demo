@@ -44,10 +44,16 @@ function on_instafood_new_order(int $orderId) {
     // $lineItemsData = $order->getLineItemsData();
 }
 
+// handle order status change (Ex: Send SMS, send alerts to waiter)
+function on_instafood_order_status_changed(int $orderId, string $newStatus) {
+    // possible newStatus values ['NEW_ORDER', 'ACCEPTED', 'REJECTED', 'PREPARED', 'DELIVERED', 'CLOSED']
+}
+
 // hooks
 if (isInstFoodInstalled()) {
     add_action('instafood_manual_remote_print_request', 'on_instafood_manual_remote_print_request', 10, 2);
     add_action('instafood_new_order', 'on_instafood_new_order', 10, 1);
+    add_action('instafood_order_status_changed', 'on_instafood_order_status_changed', 10, 2);
 }
 
 
