@@ -32,7 +32,7 @@ function on_instafood_manual_remote_print_request(int $orderId, string $printerI
 // handle new order from user in the background
 function on_instafood_new_order(int $orderId) {
     // sample on how to retrive order data
-    // could be used to inform other API's Ex: Send SMS, send alerts to waiter
+    // could be used to inform other API's Ex: Send SMS, emails, send alerts to waiter
     // can olso be used to automatically print invoice via PrintNode (see InstafoodRemotePrint example above)
 
     // $order = new com\sakuraplugins\appetit\rest_api\models\Order();
@@ -47,6 +47,38 @@ function on_instafood_new_order(int $orderId) {
 // handle order status change (Ex: Send SMS, send alerts to waiter)
 function on_instafood_order_status_changed(int $orderId, string $newStatus) {
     // possible newStatus values ['NEW_ORDER', 'ACCEPTED', 'REJECTED', 'PREPARED', 'DELIVERED', 'CLOSED']
+    
+    $order = new com\sakuraplugins\appetit\rest_api\models\Order();
+    $order->findOne($orderId);
+    if (!$order->getProperty('ID')) {
+        return;
+    }
+    $_orderAll = $order->getAllProperties();
+    $lineItemsData = $order->getLineItemsData();
+
+    // Example send email
+    // $sendto = 'your.organization@domain.com';
+    // $subject = $newStatus === 'NEW_ORDER' ? 'New order - ' . $orderId : $newStatus . ' - ' . $orderId;
+
+    // $_orderType = $_orderAll['_orderType'] ?? '';
+    // $_orderTotal = $_orderAll['_orderTotal'] ?? '';
+
+    // $tableNo = '';
+    // if ($_orderType === 'DINEIN') {
+    //     $tableNo = $_orderAll['_delivery_info']['_table'] ?? '';
+    // }
+
+    // $msg = "Order\r\n";
+    // $msg .= "Order type: $_orderType\n";
+    // $msg .= "Order total: $_orderTotal\n";
+    // $msg .= "Order status: $newStatus\n";
+    // $msg .= $tableNo !== '' ? "Table no: $tableNo\n" : '';
+
+    // try {
+    //     wp_mail($sendto, $subject, $msg);
+    // } catch (Exception $e) {
+    //     // error
+    // }
 }
 
 // override price format display (server-side)
