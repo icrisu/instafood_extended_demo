@@ -7,7 +7,7 @@ let InstafoodCustomJSHooksClass = function() {
     this.onPriceFormat = function(price, is_frontend_enabled_decimal_dot) {
 
         // return null if don't want to alter the frontend price format
-        // return null;
+        return null;
 
         if (!wNumb) {
             return null;
