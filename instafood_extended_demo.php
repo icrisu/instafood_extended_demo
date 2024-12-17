@@ -35,13 +35,24 @@ function on_instafood_new_order(int $orderId) {
     // could be used to inform other API's Ex: Send SMS, emails, send alerts to waiter
     // can olso be used to automatically print invoice via PrintNode (see InstafoodRemotePrint example above)
 
-    // $order = new com\sakuraplugins\appetit\rest_api\models\Order();
-    // $order->findOne($orderId);
-    // if (!$order->getProperty('ID')) {
-    //     return;
-    // }
+    $order = new com\sakuraplugins\appetit\rest_api\models\Order();
+    $order->findOne($orderId);
+    if (!$order->getProperty('ID')) {
+        return;
+    }
     // $_orderAll = $order->getAllProperties();
     // $lineItemsData = $order->getLineItemsData();
+
+    // Dynamically set a different order status exaample
+    // $newStatus = com\sakuraplugins\appetit\rest_api\models\OrderStatus::ACCEPTED;
+    // $order->setOrderStatus($newStatus);
+
+    // send emails
+    // try {
+    //     wp_mail('yourEmail1@domain.com,yourEmail2@domain.com', 'New order received', 'Dynamic message body');
+    // } catch (Exception $e) {
+    //     // error
+    // }
 }
 
 // handle order status change (Ex: Send SMS, send alerts to waiter)
