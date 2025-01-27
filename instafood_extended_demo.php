@@ -109,6 +109,12 @@ function on_instafood_extended_js_scrips($position = 'body') {
     return '<script src="' . plugins_url('',  __FILE__ ) . '/assets/js/instafood_custom.js' . '"></script>';
 }
 
+// handle order payment status change (Ex: Send SMS, send alerts to waiter)
+function on_instafood_order_payment_status_changed(int $orderId, string $paymentStatus) {
+    // possible paymentStatus values ['PENDING_TRANSACTION', 'PAYMENT_INTENT_SUCCEDED', 'PENDING_ON_DELIVERY', 'PAYMENT_FAILED', 'PAYMENT_CANCELED']
+    // use a similar logic within on_instafood_order_status_changed
+}
+
 // instafood custom hooks
 if (isInstFoodInstalled()) {
     add_action('instafood_manual_remote_print_request', 'on_instafood_manual_remote_print_request', 10, 2);
@@ -116,6 +122,7 @@ if (isInstFoodInstalled()) {
     add_action('instafood_order_status_changed', 'on_instafood_order_status_changed', 10, 2);
     add_filter('instafood_price_format_filter', 'on_instafood_price_format', 11, 1);
     add_filter('instafood_extended_js_scrips', 'on_instafood_extended_js_scrips', 11, 1);
+    add_action('instafood_order_payment_status_changed', 'on_instafood_order_payment_status_changed', 10, 2);
 }
 
 
